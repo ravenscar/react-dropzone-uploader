@@ -21,4 +21,4 @@ examples/src/index.js
 **/*.js
 **/*.d.ts
 
-package-lock.json
+tsconfig.tsbuildinfo

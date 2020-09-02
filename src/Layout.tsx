@@ -1,9 +1,25 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import * as React from "react";
 
-import { ILayoutProps } from './Dropzone'
+import { IExtraLayout, IFileWithMeta } from "./types";
 
-const Layout = (props: ILayoutProps) => {
+export interface ILayoutProps {
+  files: IFileWithMeta[];
+  extra: IExtraLayout;
+  input: React.ReactNode;
+  previews: React.ReactNode[] | null;
+  submitButton: React.ReactNode;
+  dropzoneProps: {
+    ref: React.RefObject<HTMLDivElement>;
+    className: string;
+    style?: React.CSSProperties;
+    onDragEnter(event: React.DragEvent<HTMLElement>): void;
+    onDragOver(event: React.DragEvent<HTMLElement>): void;
+    onDragLeave(event: React.DragEvent<HTMLElement>): void;
+    onDrop(event: React.DragEvent<HTMLElement>): void;
+  };
+}
+
+export const Layout = (props: ILayoutProps) => {
   const {
     input,
     previews,
@@ -11,7 +27,7 @@ const Layout = (props: ILayoutProps) => {
     dropzoneProps,
     files,
     extra: { maxFiles },
-  } = props
+  } = props;
 
   return (
     <div {...dropzoneProps}>
@@ -21,37 +37,5 @@ const Layout = (props: ILayoutProps) => {
 
       {files.length > 0 && submitButton}
     </div>
-  )
-}
-
-Layout.propTypes = {
-  input: PropTypes.node,
-  previews: PropTypes.arrayOf(PropTypes.node),
-  submitButton: PropTypes.node,
-  dropzoneProps: PropTypes.shape({
-    ref: PropTypes.any.isRequired,
-    className: PropTypes.string.isRequired,
-    style: PropTypes.object,
-    onDragEnter: PropTypes.func.isRequired,
-    onDragOver: PropTypes.func.isRequired,
-    onDragLeave: PropTypes.func.isRequired,
-    onDrop: PropTypes.func.isRequired,
-  }).isRequired,
-  files: PropTypes.arrayOf(PropTypes.any).isRequired,
-  extra: PropTypes.shape({
-    active: PropTypes.bool.isRequired,
-    reject: PropTypes.bool.isRequired,
-    dragged: PropTypes.arrayOf(PropTypes.any).isRequired,
-    accept: PropTypes.string.isRequired,
-    multiple: PropTypes.bool.isRequired,
-    minSizeBytes: PropTypes.number.isRequired,
-    maxSizeBytes: PropTypes.number.isRequired,
-    maxFiles: PropTypes.number.isRequired,
-    onFiles: PropTypes.func.isRequired,
-    onCancelFile: PropTypes.func.isRequired,
-    onRemoveFile: PropTypes.func.isRequired,
-    onRestartFile: PropTypes.func.isRequired,
-  }).isRequired,
-}
-
-export default Layout
+  );
+};
